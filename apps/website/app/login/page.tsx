@@ -1,15 +1,23 @@
 "use client"
 
+import { useEffect } from "react"
+import { useRouter } from "next/navigation"
 import { useAuth } from "@/contexts/auth-context"
-import { redirect } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { GithubLogo } from "@phosphor-icons/react"
 
 export default function LoginPage() {
-  const { isLoggedIn, login } = useAuth()
+  const { isLoggedIn, isLoading, login } = useAuth()
+  const router = useRouter()
 
-  if (isLoggedIn) {
-    redirect("/")
+  useEffect(() => {
+    if (!isLoading && isLoggedIn) {
+      router.replace("/")
+    }
+  }, [isLoading, isLoggedIn, router])
+
+  if (isLoading || isLoggedIn) {
+    return null
   }
 
   return (

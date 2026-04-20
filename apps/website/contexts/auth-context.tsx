@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 
 interface AuthContextValue {
   isLoggedIn: boolean
+  isLoading: boolean
   user: { name: string; email: string; avatar: string } | null
   login: () => void
   logout: () => void
@@ -19,12 +20,14 @@ const MOCK_USER = {
 }
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [isLoggedIn, setIsLoggedIn] = React.useState<boolean>(() => {
-    if (typeof window === "undefined") return false
-    return localStorage.getItem("mock-auth") === "true"
-  })
-
+  const [isLoggedIn, setIsLoggedIn] = React.useState(false)
+  const [isLoading, setIsLoading] = React.useState(true)
   const router = useRouter()
+
+  React.useEffect(() => {
+    setIsLoggedIn(localStorage.getItem("mock-auth") === "true")
+    setIsLoading(false)
+  }, [])
 
   const login = React.useCallback(() => {
     localStorage.setItem("mock-auth", "true")
@@ -41,11 +44,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const value = React.useMemo(
     () => ({
       isLoggedIn,
+      isLoading,
       user: isLoggedIn ? MOCK_USER : null,
       login,
       logout,
     }),
-    [isLoggedIn, login, logout]
+    [isLoggedIn, isLoading, login, logout]
   )
 
   return <AuthContext value={value}>{children}</AuthContext>

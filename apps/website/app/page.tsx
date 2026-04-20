@@ -1,7 +1,8 @@
 "use client"
 
+import { useEffect } from "react"
+import { useRouter } from "next/navigation"
 import { useAuth } from "@/contexts/auth-context"
-import { redirect } from "next/navigation"
 import { AppSidebar } from "@/components/app-sidebar"
 import { ChartAreaInteractive } from "@/components/chart-area-interactive"
 import { DataTable } from "@/components/data-table"
@@ -12,10 +13,17 @@ import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
 import data from "./dashboard/data.json"
 
 export default function Page() {
-  const { isLoggedIn } = useAuth()
+  const { isLoggedIn, isLoading } = useAuth()
+  const router = useRouter()
 
-  if (!isLoggedIn) {
-    redirect("/login")
+  useEffect(() => {
+    if (!isLoading && !isLoggedIn) {
+      router.replace("/login")
+    }
+  }, [isLoading, isLoggedIn, router])
+
+  if (isLoading || !isLoggedIn) {
+    return null
   }
 
   return (
