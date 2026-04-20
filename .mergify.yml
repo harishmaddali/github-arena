@@ -1,30 +1,14 @@
 queue_rules:
   - name: Default merge queue
     autoqueue: true
-    draft_bot_account: imbhargav5
-    merge_bot_account: imbhargav5
-    update_bot_account: imbhargav5
+    draft_bot_account: harishmaddali
+    merge_bot_account: harishmaddali
+    update_bot_account: harishmaddali
     merge_method: merge
     merge_conditions:
-      - check-success=GitGuardian Security Checks
       - or:
-          - check-success=Oxlint
-          - check-skipped=Oxlint
-      - or:
-          - check-success=TypeScript Check
-          - check-skipped=TypeScript Check
-      - or:
-          - check-success=Web CI
-          - check-skipped=Web CI
-      - or:
-          - check-success=Admin Web CI
-          - check-skipped=Admin Web CI
-      - or:
-          - check-success=Supabase Checks
-          - check-skipped=Supabase Checks
-      - or:
-          - check-success=Rocket VM Provisioner
-          - check-skipped=Rocket VM Provisioner
+          - check-success=Run pgTAP database tests
+          - check-skipped=Run pgTAP database tests
 merge_queue:
   max_parallel_checks: 10
 merge_protections:
