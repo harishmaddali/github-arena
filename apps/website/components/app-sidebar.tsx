@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { useSession } from "next-auth/react"
 
 import { NavDocuments } from "@/components/nav-documents"
 import { NavMain } from "@/components/nav-main"
@@ -15,63 +16,55 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { SquaresFourIcon, ListIcon, ChartBarIcon, FolderIcon, UsersIcon, CameraIcon, FileTextIcon, GearIcon, QuestionIcon, MagnifyingGlassIcon, DatabaseIcon, ChartLineIcon, FileIcon, CommandIcon } from "@phosphor-icons/react"
+import {
+  SquaresFourIcon,
+  ListIcon,
+  ChartBarIcon,
+  FolderIcon,
+  UsersIcon,
+  CameraIcon,
+  FileTextIcon,
+  GearIcon,
+  QuestionIcon,
+  MagnifyingGlassIcon,
+  DatabaseIcon,
+  ChartLineIcon,
+  FileIcon,
+  CommandIcon,
+} from "@phosphor-icons/react"
 
 const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
   navMain: [
     {
       title: "Dashboard",
       url: "#",
-      icon: (
-        <SquaresFourIcon
-        />
-      ),
+      icon: <SquaresFourIcon />,
     },
     {
       title: "Lifecycle",
       url: "#",
-      icon: (
-        <ListIcon
-        />
-      ),
+      icon: <ListIcon />,
     },
     {
       title: "Analytics",
       url: "#",
-      icon: (
-        <ChartBarIcon
-        />
-      ),
+      icon: <ChartBarIcon />,
     },
     {
       title: "Projects",
       url: "#",
-      icon: (
-        <FolderIcon
-        />
-      ),
+      icon: <FolderIcon />,
     },
     {
       title: "Team",
       url: "#",
-      icon: (
-        <UsersIcon
-        />
-      ),
+      icon: <UsersIcon />,
     },
   ],
   navClouds: [
     {
       title: "Capture",
-      icon: (
-        <CameraIcon
-        />
-      ),
+      icon: <CameraIcon />,
       isActive: true,
       url: "#",
       items: [
@@ -87,10 +80,7 @@ const data = {
     },
     {
       title: "Proposal",
-      icon: (
-        <FileTextIcon
-        />
-      ),
+      icon: <FileTextIcon />,
       url: "#",
       items: [
         {
@@ -105,10 +95,7 @@ const data = {
     },
     {
       title: "Prompts",
-      icon: (
-        <FileTextIcon
-        />
-      ),
+      icon: <FileTextIcon />,
       url: "#",
       items: [
         {
@@ -126,57 +113,47 @@ const data = {
     {
       title: "Settings",
       url: "#",
-      icon: (
-        <GearIcon
-        />
-      ),
+      icon: <GearIcon />,
     },
     {
       title: "Get Help",
       url: "#",
-      icon: (
-        <QuestionIcon
-        />
-      ),
+      icon: <QuestionIcon />,
     },
     {
       title: "Search",
       url: "#",
-      icon: (
-        <MagnifyingGlassIcon
-        />
-      ),
+      icon: <MagnifyingGlassIcon />,
     },
   ],
   documents: [
     {
       name: "Data Library",
       url: "#",
-      icon: (
-        <DatabaseIcon
-        />
-      ),
+      icon: <DatabaseIcon />,
     },
     {
       name: "Reports",
       url: "#",
-      icon: (
-        <ChartLineIcon
-        />
-      ),
+      icon: <ChartLineIcon />,
     },
     {
       name: "Word Assistant",
       url: "#",
-      icon: (
-        <FileIcon
-        />
-      ),
+      icon: <FileIcon />,
     },
   ],
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const { data: session } = useSession()
+
+  const user = {
+    name: session?.user?.name || "User",
+    email: session?.user?.email || "",
+    avatar: session?.user?.image || "",
+  }
+
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
@@ -188,7 +165,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             >
               <a href="#">
                 <CommandIcon className="size-5!" />
-                <span className="text-base font-semibold">Acme Inc.</span>
+                <span className="text-base font-semibold">GitHub Arena</span>
               </a>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -200,7 +177,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={user} />
       </SidebarFooter>
     </Sidebar>
   )
