@@ -1,11 +1,11 @@
 "use client"
 
-import { signOut } from "next-auth/react"
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
 } from "@/components/ui/avatar"
+import { useAuth } from "@/components/session-provider"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -39,6 +39,7 @@ export function NavUser({
   }
 }) {
   const { isMobile } = useSidebar()
+  const { signOut } = useAuth()
 
   const initials = user.name
     .split(" ")
@@ -109,7 +110,7 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => signOut({ callbackUrl: "/login" })}>
+            <DropdownMenuItem onClick={() => void signOut()}>
               <SignOutIcon />
               Log out
             </DropdownMenuItem>

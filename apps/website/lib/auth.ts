@@ -1,37 +1,24 @@
-import NextAuth from "next-auth"
-import GitHub from "next-auth/providers/github"
+import "server-only"
 
-export const { handlers, signIn, signOut, auth } = NextAuth({
-  providers: [
-    GitHub({
-      clientId: process.env.GITHUB_CLIENT_ID,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET,
-      authorization: {
-        params: {
-          scope: "read:user user:email repo",
-        },
-      },
-    }),
-  ],
-  pages: {
-    signIn: "/login",
-  },
-  session: {
-    strategy: "jwt",
-  },
-  callbacks: {
-    jwt({ token, account, profile }) {
-      if (account) {
-        token.accessToken = account.access_token
-        token.githubUsername = (profile as Record<string, unknown>)
-          ?.login as string
-      }
-      return token
-    },
-    session({ session, token }) {
-      session.accessToken = token.accessToken
-      session.githubUsername = token.githubUsername
-      return session
-    },
-  },
-})
+import { createClient } from "@/lib/supabase/server"
+
+export async function getAuthenticatedGitHubAccessToken() {
+  const supabase = await createClient()
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.getUser()
+
+  if (error || !user) {
+    return { user: null, token: null }
+  }
+
+  const {
+    data: { session },
+  } = await supabase.auth.getSession()
+
+  return {
+    user,
+    token: session?.provider_token ?? null,
+  }
+}
