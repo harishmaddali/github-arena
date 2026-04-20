@@ -2,8 +2,8 @@
 
 import * as React from "react"
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts"
-import { useSession } from "next-auth/react"
 
+import { useAuth } from "@/components/session-provider"
 import {
   Card,
   CardAction,
@@ -50,7 +50,7 @@ interface RepoCommitData {
 }
 
 export function CommitChart() {
-  const { data: session } = useSession()
+  const { session } = useAuth()
   const [period, setPeriod] = React.useState("24h")
   const [data, setData] = React.useState<RepoCommitData[]>([])
   const [loading, setLoading] = React.useState(true)
@@ -58,9 +58,6 @@ export function CommitChart() {
 
   React.useEffect(() => {
     if (!session) return
-
-    setLoading(true)
-    setError(null)
 
     fetch(`/api/commits?period=${period}`)
       .then((res) => {
@@ -72,10 +69,20 @@ export function CommitChart() {
         setLoading(false)
       })
       .catch((err) => {
-        setError(err.message)
+        setError(err instanceof Error ? err.message : "Failed to fetch commit data")
         setLoading(false)
       })
   }, [session, period])
+
+  function handlePeriodChange(nextPeriod: string) {
+    if (!nextPeriod || nextPeriod === period) {
+      return
+    }
+
+    setLoading(true)
+    setError(null)
+    setPeriod(nextPeriod)
+  }
 
   return (
     <Card className="@container/card">
@@ -85,7 +92,7 @@ export function CommitChart() {
           <ToggleGroup
             type="single"
             value={period}
-            onValueChange={(val) => val && setPeriod(val)}
+            onValueChange={handlePeriodChange}
             variant="outline"
             className="hidden *:data-[slot=toggle-group-item]:px-4! @[540px]/card:flex"
           >
@@ -94,7 +101,7 @@ export function CommitChart() {
             <ToggleGroupItem value="24h">24h</ToggleGroupItem>
             <ToggleGroupItem value="1w">1w</ToggleGroupItem>
           </ToggleGroup>
-          <Select value={period} onValueChange={setPeriod}>
+          <Select value={period} onValueChange={handlePeriodChange}>
             <SelectTrigger
               className="flex w-20 @[540px]/card:hidden"
               size="sm"

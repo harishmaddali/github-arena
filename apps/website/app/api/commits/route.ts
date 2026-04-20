@@ -1,4 +1,4 @@
-import { auth } from "@/lib/auth"
+import { getAuthenticatedGitHubAccessToken } from "@/lib/auth"
 
 const CODE_EXTENSIONS = new Set([
   ".ts",
@@ -90,8 +90,9 @@ async function ghFetch(url: string, token: string) {
 }
 
 export async function GET(request: Request) {
-  const session = await auth()
-  if (!session?.accessToken) {
+  const { token } = await getAuthenticatedGitHubAccessToken()
+
+  if (!token) {
     return Response.json({ error: "Unauthorized" }, { status: 401 })
   }
 
@@ -99,8 +100,6 @@ export async function GET(request: Request) {
   const period = searchParams.get("period") || "24h"
   const since = getSinceDate(period)
   const sinceISO = since.toISOString()
-  const token = session.accessToken
-
   try {
     // Get authenticated user's login
     const user = await ghFetch("https://api.github.com/user", token)

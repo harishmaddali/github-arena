@@ -1,4 +1,4 @@
-import { auth } from "@/lib/auth"
+import { getAuthenticatedGitHubAccessToken } from "@/lib/auth"
 
 function getSinceDate(period: string): Date {
   const now = new Date()
@@ -48,8 +48,8 @@ interface AuthorCount {
 const REPO_RE = /^[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\/[A-Za-z0-9._-]+$/
 
 export async function GET(request: Request) {
-  const session = await auth()
-  const token = session?.accessToken
+  const { token } = await getAuthenticatedGitHubAccessToken()
+  const authToken = token ?? undefined
 
   const { searchParams } = new URL(request.url)
   const repo = searchParams.get("repo") || ""
@@ -71,7 +71,7 @@ export async function GET(request: Request) {
     for (let page = 1; page <= 3; page++) {
       const batch: GhCommit[] = await ghFetch(
         `https://api.github.com/repos/${repo}/commits?since=${sinceISO}&per_page=100&page=${page}`,
-        token
+        authToken
       )
       all.push(...batch)
       if (batch.length < 100) break

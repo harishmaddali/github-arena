@@ -2,14 +2,14 @@
 
 import { useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { useSession } from "next-auth/react"
 import { AppSidebar } from "@/components/app-sidebar"
+import { useAuth } from "@/components/session-provider"
 import { CommitChart } from "@/components/commit-chart"
 import { SiteHeader } from "@/components/site-header"
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
 
 export default function Page() {
-  const { data: session, status } = useSession()
+  const { session, status } = useAuth()
   const router = useRouter()
 
   useEffect(() => {

@@ -1,12 +1,12 @@
 "use client"
 
 import * as React from "react"
-import { useSession } from "next-auth/react"
 
 import { NavDocuments } from "@/components/nav-documents"
 import { NavMain } from "@/components/nav-main"
 import { NavSecondary } from "@/components/nav-secondary"
 import { NavUser } from "@/components/nav-user"
+import { useAuthUserProfile } from "@/components/session-provider"
 import {
   Sidebar,
   SidebarContent,
@@ -152,13 +152,7 @@ const data = {
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { data: session } = useSession()
-
-  const user = {
-    name: session?.user?.name || "User",
-    email: session?.user?.email || "",
-    avatar: session?.user?.image || "",
-  }
+  const user = useAuthUserProfile()
 
   return (
     <Sidebar collapsible="offcanvas" {...props}>
