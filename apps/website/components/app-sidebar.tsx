@@ -31,14 +31,20 @@ import {
   ChartLineIcon,
   FileIcon,
   CommandIcon,
+  GithubLogoIcon,
 } from "@phosphor-icons/react"
 
 const data = {
   navMain: [
     {
       title: "Dashboard",
-      url: "#",
+      url: "/",
       icon: <SquaresFourIcon />,
+    },
+    {
+      title: "Public Stats",
+      url: "/public-stats",
+      icon: <GithubLogoIcon />,
     },
     {
       title: "Lifecycle",
