@@ -1,0 +1,40 @@
+name: Database Tests
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'apps/database/**'
+      - '.github/workflows/database-tests.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'apps/database/**'
+      - '.github/workflows/database-tests.yml'
+
+jobs:
+  test:
+    name: Run pgTAP database tests
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/database
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Supabase CLI
+        uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - name: Start Supabase local stack
+        run: supabase start
+
+      - name: Run database tests
+        run: supabase db test
+
+      - name: Stop Supabase local stack
+        if: always()
+        run: supabase stop --no-backup
