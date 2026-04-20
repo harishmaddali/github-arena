@@ -1,0 +1,519 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const features = [
+  {
+    icon: "⚔️",
+    title: "Head-to-Head Battles",
+    description:
+      "Challenge other developers to real-time coding duels. Solve problems faster, write cleaner code, and climb the ranks.",
+  },
+  {
+    icon: "📊",
+    title: "Live Leaderboards",
+    description:
+      "Track your progress with global and language-specific leaderboards. See how you stack up against the best.",
+  },
+  {
+    icon: "🏆",
+    title: "Seasonal Tournaments",
+    description:
+      "Compete in weekly and monthly tournaments with prizes. Form teams or go solo — every season is a fresh start.",
+  },
+  {
+    icon: "🔗",
+    title: "GitHub Integration",
+    description:
+      "Sign in with GitHub, showcase your profile, and earn badges that appear on your contributions.",
+  },
+  {
+    icon: "🧠",
+    title: "Skill-Based Matching",
+    description:
+      "Our ELO-style rating system ensures fair matchups so you're always challenged at the right level.",
+  },
+  {
+    icon: "🌍",
+    title: "Open Source First",
+    description:
+      "Built in the open, for the community. Every challenge, every tool, every improvement — driven by contributors like you.",
+  },
+];
+---
+
+<Layout title="GitHub Arena — Compete. Code. Conquer.">
+  <!-- Nav -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="/" class="logo">
+        <span class="logo-icon">A</span>
+        <span class="logo-text">GitHub Arena</span>
+      </a>
+      <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#cta">Join</a>
+        <a href="https://github.com" class="btn btn-sm" target="_blank" rel="noopener">
+          GitHub &rarr;
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-glow"></div>
+    <div class="container">
+      <p class="badge">Now in Early Access</p>
+      <h1 class="hero-title">
+        Where developers <br /><span class="gradient-text">compete &amp; grow</span>
+      </h1>
+      <p class="hero-subtitle">
+        GitHub Arena is the competitive coding platform built for open-source
+        developers. Battle head-to-head, climb the leaderboard, and sharpen your
+        skills — all connected to your GitHub identity.
+      </p>
+      <div class="hero-actions">
+        <a href="#cta" class="btn btn-primary">Get Early Access</a>
+        <a href="#features" class="btn btn-outline">See Features</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-value">2,400+</span>
+          <span class="stat-label">Developers</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value">18k</span>
+          <span class="stat-label">Battles</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value">42</span>
+          <span class="stat-label">Languages</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section id="features" class="features">
+    <div class="container">
+      <p class="section-badge">Features</p>
+      <h2 class="section-title">Everything you need to level up</h2>
+      <div class="features-grid">
+        {
+          features.map((f) => (
+            <div class="feature-card">
+              <span class="feature-icon">{f.icon}</span>
+              <h3>{f.title}</h3>
+              <p>{f.description}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="cta" class="cta">
+    <div class="container">
+      <div class="cta-card">
+        <h2>Ready to enter the arena?</h2>
+        <p>
+          Join thousands of developers already competing. Sign up with your
+          GitHub account and start your first battle in minutes.
+        </p>
+        <a href="https://github.com" class="btn btn-primary" target="_blank" rel="noopener">
+          Sign in with GitHub &rarr;
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="/" class="logo">
+          <span class="logo-icon">A</span>
+          <span class="logo-text">GitHub Arena</span>
+        </a>
+        <p class="footer-tagline">Compete. Code. Conquer.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Product</h4>
+          <a href="#features">Features</a>
+          <a href="#">Leaderboard</a>
+          <a href="#">Tournaments</a>
+        </div>
+        <div class="footer-col">
+          <h4>Community</h4>
+          <a href="#">Discord</a>
+          <a href="#">Twitter</a>
+          <a href="#">Blog</a>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom container">
+      <p>&copy; 2026 GitHub Arena. All rights reserved.</p>
+    </div>
+  </footer>
+</Layout>
+
+<style>
+  /* ---- Nav ---- */
+  .nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: rgba(10, 10, 11, 0.8);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .nav-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    font-weight: 700;
+    font-size: 1.125rem;
+  }
+
+  .logo-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: var(--color-accent);
+    border-radius: 8px;
+    font-weight: 800;
+    font-size: 1rem;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+  }
+
+  .nav-links a:hover {
+    color: var(--color-text);
+  }
+
+  /* ---- Buttons ---- */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 0.7rem 1.5rem;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: none;
+  }
+
+  .btn-sm {
+    padding: 0.4rem 1rem;
+    font-size: 0.85rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    color: var(--color-text);
+  }
+
+  .btn-sm:hover {
+    background: var(--color-border);
+  }
+
+  .btn-primary {
+    background: var(--color-accent);
+    color: #fff;
+  }
+
+  .btn-primary:hover {
+    background: var(--color-accent-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 20px rgba(109, 92, 255, 0.35);
+  }
+
+  .btn-outline {
+    background: transparent;
+    border: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+  }
+
+  .btn-outline:hover {
+    border-color: var(--color-text-muted);
+    color: var(--color-text);
+  }
+
+  /* ---- Container ---- */
+  .container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  /* ---- Hero ---- */
+  .hero {
+    position: relative;
+    padding: 10rem 0 6rem;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .hero-glow {
+    position: absolute;
+    top: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(109, 92, 255, 0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .badge,
+  .section-badge {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-accent);
+    background: rgba(109, 92, 255, 0.1);
+    border: 1px solid rgba(109, 92, 255, 0.2);
+    padding: 0.35rem 1rem;
+    border-radius: 100px;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-title {
+    font-size: clamp(2.5rem, 6vw, 4.25rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+
+  .gradient-text {
+    background: linear-gradient(135deg, var(--color-accent) 0%, #c084fc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-subtitle {
+    max-width: 640px;
+    margin: 0 auto 2.5rem;
+    font-size: 1.15rem;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 4rem;
+  }
+
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 4rem;
+  }
+
+  .stat-value {
+    display: block;
+    font-size: 1.75rem;
+    font-weight: 700;
+  }
+
+  .stat-label {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+  }
+
+  /* ---- Features ---- */
+  .features {
+    padding: 6rem 0;
+    text-align: center;
+  }
+
+  .section-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 3rem;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    text-align: left;
+  }
+
+  .feature-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: 2rem;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .feature-card:hover {
+    border-color: var(--color-accent);
+    transform: translateY(-2px);
+  }
+
+  .feature-icon {
+    font-size: 1.75rem;
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+
+  .feature-card h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .feature-card p {
+    font-size: 0.925rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+  }
+
+  /* ---- CTA ---- */
+  .cta {
+    padding: 4rem 0 6rem;
+  }
+
+  .cta-card {
+    background: linear-gradient(135deg, rgba(109, 92, 255, 0.12) 0%, rgba(192, 132, 252, 0.08) 100%);
+    border: 1px solid rgba(109, 92, 255, 0.25);
+    border-radius: 16px;
+    padding: 4rem 2rem;
+    text-align: center;
+  }
+
+  .cta-card h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+
+  .cta-card p {
+    max-width: 520px;
+    margin: 0 auto 2rem;
+    color: var(--color-text-muted);
+    font-size: 1.05rem;
+    line-height: 1.6;
+  }
+
+  /* ---- Footer ---- */
+  .footer {
+    border-top: 1px solid var(--color-border);
+    padding-top: 4rem;
+    padding-bottom: 2rem;
+  }
+
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    gap: 3rem;
+    flex-wrap: wrap;
+    margin-bottom: 3rem;
+  }
+
+  .footer-tagline {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 4rem;
+  }
+
+  .footer-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .footer-col h4 {
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-text);
+    margin-bottom: 0.25rem;
+  }
+
+  .footer-col a {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    transition: color 0.15s;
+  }
+
+  .footer-col a:hover {
+    color: var(--color-text);
+  }
+
+  .footer-bottom {
+    border-top: 1px solid var(--color-border);
+    padding-top: 1.5rem;
+    text-align: center;
+  }
+
+  .footer-bottom p {
+    font-size: 0.825rem;
+    color: var(--color-text-muted);
+  }
+
+  /* ---- Responsive ---- */
+  @media (max-width: 768px) {
+    .hero {
+      padding: 8rem 0 4rem;
+    }
+
+    .hero-stats {
+      gap: 2rem;
+    }
+
+    .hero-actions {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .footer-links {
+      gap: 2rem;
+    }
+
+    .nav-links a:not(.btn) {
+      display: none;
+    }
+  }
+</style>
