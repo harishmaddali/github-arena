@@ -2,21 +2,21 @@
 
 import { useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { useAuth } from "@/contexts/auth-context"
+import { signIn, useSession } from "next-auth/react"
 import { Button } from "@/components/ui/button"
 import { GithubLogo } from "@phosphor-icons/react"
 
 export default function LoginPage() {
-  const { isLoggedIn, isLoading, login } = useAuth()
+  const { data: session, status } = useSession()
   const router = useRouter()
 
   useEffect(() => {
-    if (!isLoading && isLoggedIn) {
+    if (status === "authenticated") {
       router.replace("/")
     }
-  }, [isLoading, isLoggedIn, router])
+  }, [status, router])
 
-  if (isLoading || isLoggedIn) {
+  if (status === "loading" || session) {
     return null
   }
 
@@ -31,7 +31,11 @@ export default function LoginPage() {
             Sign in to access your dashboard
           </p>
         </div>
-        <Button onClick={login} size="lg" className="w-full gap-2">
+        <Button
+          onClick={() => signIn("github", { callbackUrl: "/" })}
+          size="lg"
+          className="w-full gap-2"
+        >
           <GithubLogo weight="fill" className="size-5" />
           Continue with Github
         </Button>
